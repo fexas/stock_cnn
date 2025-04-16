@@ -216,7 +216,7 @@ optimizer = torch.optim.Adam(net.parameters(), lr=1e-5)
 start_epoch = 0
 min_val_loss = 1e9
 last_min_ind = -1
-early_stopping_epoch = 5
+early_stopping_epoch = 20
 
 from torch.utils.tensorboard import SummaryWriter
 tb = SummaryWriter()
