@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import torch.nn as nn
+# import torch.enable_grad
 from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.image import show_cam_on_image
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
@@ -31,9 +32,9 @@ def runGradCam(model, images_scores, target_class, results_path='./'):
         plt.savefig(savepath, bbox_inches='tight', pad_inches=0)
         plt.close()
 
-        if len(img.shape) == 2:  #
+        if len(img.shape) == 2:  
             img = img.unsqueeze(0)  # (C, H, W)
-
+            
         # Prepare the image for Grad-CAM
         img_tensor = img.unsqueeze(0).to(next(model.parameters()).device)  # Ensure the image is on the same device as the model
         img_bw = img.squeeze().cpu().numpy()
@@ -41,10 +42,15 @@ def runGradCam(model, images_scores, target_class, results_path='./'):
         img_normalized = np.float32(img_rgb) / 255
 
         # Specify the target layers (layer1, layer2, layer3)
-        target_layers = [model.layer1, model.layer2, model.layer3]
+        # target_layers = [model.layer1, model.layer2, model.layer3]
+        target_layers = [
+            model.layer1[0],
+            model.layer2[0], 
+            model.layer3[0]
+        ]
         for idx, module in enumerate(target_layers, start=1):
             cam = GradCAM(model=model, target_layers=[module])
-            targets = [ClassifierOutputTarget(target_class)]
+            targets = [ClassifierOutputTarget(target_class)]       
             grayscale_cam = cam(input_tensor=img_tensor, targets=targets)[0, :]
             
             # Grad-CAM visualization with the original image
