@@ -1,0 +1,4 @@
+Dropout_rate:0.0, Best epoch: 5, val_loss: 0.7030196686137887
+Dropout_rate:0.25, Best epoch: 6, val_loss: 0.6890784713288788
+Dropout_rate:0.5, Best epoch: 21, val_loss: 0.6885340596462706
+Dropout_rate:0.75, Best epoch: 9, val_loss: 0.6916611423352735

@@ -1,0 +1,2 @@
+bn:True, Best epoch: 5, val_loss: 0.7027168644198271
+bn:False, Best epoch: 2, val_loss: 0.7000229715900925
