@@ -3,7 +3,7 @@ use_gpu = True
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from gradcam import runGradCam
+from gradcam import runGradCam, generate_gradcam_heatmaps
 import heapq
 
 import os
@@ -214,13 +214,18 @@ def generate_top5_samples(y_pred, y_target, images, criterion=None):
     return high_scores_0, high_scores_1
 
 # images = torch.tensor(images, dtype=torch.float32)
-# images = images.to(device)
-top5_down, top5_up = generate_top5_samples(y_pred, y_target, dataset.img, loss_fn)
+top5_down, top5_up = generate_top5_samples(y_pred, y_target, dataset.img)
 
 # Define output dimension
 outdim = 2  # Assume output dimension is 2, adjust based on the actual model
 
 # Grad-CAM result generation
+# savepath = os.path.join(results_path, 'gradcam', 'down')
+# generate_gradcam_heatmaps(net.module, top5_down, 0, savepath)
+
+# savepath = os.path.join(results_path, 'gradcam', 'up')
+# generate_gradcam_heatmaps(net.module, top5_up, 1, savepath)
+
 savepath = os.path.join(results_path, 'gradcam', 'down')
 runGradCam(net.module, top5_down, 0, savepath)  # Generate Grad-CAM for the 'down' class
 
